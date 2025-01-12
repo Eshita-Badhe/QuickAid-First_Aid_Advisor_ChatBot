@@ -35,10 +35,10 @@ First Aid Advisor Chatbot is a web-based chatbot that provides quick and easy fi
 ### Steps
 <ol>
     <li>Clone the repository:
-        <pre><code>git clone https://github.com/your-repository/first-aid-advice-chatbot.git</code></pre>
+        <pre><code>git clone https://github.com/Eshita-Badhe/QuickAid-First_Aid_Advisor_ChatBot.git</code></pre>
     </li>
     <li>Navigate to the project directory:
-        <pre><code>cd first-aid-advice-chatbot</code></pre>
+        <pre><code>cd QuickAid-First_Aid_Advisor_ChatBot</code></pre>
     </li>
     <li>Install dependencies (if applicable):
         <pre><code>npm install</code></pre>
