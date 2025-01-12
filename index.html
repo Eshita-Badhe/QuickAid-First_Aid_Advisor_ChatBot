@@ -1,0 +1,353 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickAid First Aid Chat Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .header-container
+        {
+          display: flex;
+          max-width: 800px;
+            margin:  auto;
+            margin-bottom: 0px;
+            gap: 2px;
+        }
+        header {
+            background-color: #0078D7;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        header img {
+            display: flex;
+            margin: 0 auto;
+            width: 100px;
+            height: auto;
+            margin-bottom: 0px;
+            border-radius: 30%;
+        }
+        .main-container {
+            display: flex;
+            max-width: 1300px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+        .chat-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: 495px;
+            width: 1200px;
+        }
+        .chat-header {
+            background-color: #0078D7;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .chat-header h2{
+          margin: 0px;
+        }
+        .chat-body {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+
+        }
+        .message {
+            margin-bottom: 15px;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 75%;
+        }
+        .user-message {
+            background-color: #0078D7;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 75%;
+            margin-left: auto;
+        }
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .chat-footer button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .chat-footer button:hover {
+            background-color: #005bb5;
+        }
+        /* Left panel container */
+        .info-panel {
+            background-color: #f1f1f1; /* Light gray background */
+            padding: 20px; /* Add padding for spacing */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            font-family: Arial, sans-serif; /* Consistent font */
+            width: 200px;
+        }
+
+        /* Headings inside the left panel */
+        .info-panel h4 {
+            color: #333; /* Dark text for readability */
+            margin-bottom: 0;
+        }
+
+        /* Buttons inside the left panel */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #0078D7;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+            font-size: 15px;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+        /* Tooltip Styling */
+        .button::after {
+            content: attr(data-tooltip); /* Tooltip content from data-tooltip attribute */
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 15px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+        }
+        .button:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+      <div class="header-container">
+        <img src="logo.jpg" alt="QuickAid Logo">
+        <h1>QuickAid - A First Aid ChatBot</h1>
+      </div>
+    </header>
+    <div class="main-container">
+        <div class="info-panel">
+            <h4>Scenario-Based Training</h4>
+            <a href="#training" class="button" id="startTrainingButton" data-tooltip="Learn step-by-step first aid techniques.">Start Training</a>
+            <br><br>
+            <h4>Emergency Support</h4>
+            <a href="#emergency" class="button"  id="findHelpButton" data-tooltip="Find emergency contacts and healthcare locations.">Find Help</a>
+            <br><br>
+            <h4>Nearby Hospitals</h4>
+            <a href="#hospital" class="button"  id="findNearbyHospital" data-tooltip="Find nearby healthcare locations.">Find Hospital</a>
+            
+        </div>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Chat with QuickAid</h2>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot-message">
+                    Hello! I'm QuickAid. How can I assist you with first aid today?
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="userInput" placeholder="Type your message here...">
+                <button onclick="sendMessage()">Send</button>
+                <button id="start-speaking">🎤</button>
+            </div>
+        </div>
+    </div>
+
+    
+  <script>
+    const button = document.getElementById('start-speaking');
+    const chatBox = document.getElementById('chatBody');
+    const userInput = document.getElementById('userInput');
+
+    // Initialize Speech Recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    // Configure recognition
+    recognition.lang = 'en-US'; // Set language to English
+    recognition.interimResults = false; // Only return final results
+    recognition.maxAlternatives = 1; // Return only the best match
+
+    // Start speech recognition
+    button.addEventListener('click', () => {
+      recognition.start();
+      console.log('Listening for speech...');
+    });
+
+    recognition.addEventListener('result', (event) => {
+      const userSpeech = event.results[0][0].transcript; // Get recognized speech
+      console.log('User said:', userSpeech);
+
+      // Display user speech in chat box
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('message','user-message');
+        userDiv.textContent=userSpeech;
+        chatBox.appendChild(userDiv);
+
+      // Send recognized speech to the server
+      sendToServer(userSpeech);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      console.error('Speech recognition error:', event.error);
+      alert('Error with speech recognition. Please try again.');
+    });
+
+    // Function to send user input to the server
+    function sendMessage() {
+      const textInput = userInput.value;
+      if (textInput) {
+        // Display user input in chat box
+        const userDiv = document.createElement('div');
+        userDiv.classList.add('message','user-message');
+        userDiv.textContent=userInput.value;
+        chatBox.appendChild(userDiv);
+        userInput.value = ''; // Clear the input field
+               
+        chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the latest message
+
+        // Send text input to the server
+        sendToServer(textInput);
+      }
+    }
+
+    // Function to handle sending data to the server
+    function sendToServer(input) {
+      
+      if (input.toLowerCase() === 'training') {
+        // Respond with training info
+        const responseDiv = document.createElement('div');
+        responseDiv.classList.add('message', 'bot-message');
+        responseDiv.textContent = 'There is no training program available at the moment.';
+        chatBox.appendChild(responseDiv);
+
+        // Read the chatbot's response aloud
+        speakText('There is no training program available at the moment.');
+      } else if (input.toLowerCase() === 'emergency contact') {
+        // List emergency contacts
+        const emergencyContacts = `
+          Here are some important emergency contacts:                                 Emergency Services (Ambulance): 112
+        `;
+        const responseDiv = document.createElement('div');
+        responseDiv.classList.add('message', 'bot-message');
+        responseDiv.textContent = emergencyContacts;
+        chatBox.appendChild(responseDiv);
+
+        // Read the chatbot's response aloud
+        speakText(emergencyContacts);
+    }
+    else if(input.toLowerCase() === 'locate')
+    {
+      location.href="left.html";
+    }
+    else {
+
+    // Text-to-Speech Function
+    function speakText(text) {
+      const speech = new SpeechSynthesisUtterance(text); // Create a speech object
+      speech.lang = 'en-US'; // Set language to English
+      speech.pitch = 1; // Set pitch (1 is default)
+      speech.rate = 1; // Set speed (1 is normal)
+      window.speechSynthesis.speak(speech); // Speak the text
+    }
+      fetch('http://localhost:3000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userInput: input })
+      })
+
+        .then(response => response.json())
+        .then(data => {
+          // Display chatbot response
+          const responseDiv = document.createElement('div');
+          responseDiv.classList.add('message', 'bot-message');
+          responseDiv.textContent = data.response;
+          chatBox.appendChild(responseDiv);
+
+          // Read the chatbot's response aloud
+          speakText(data.response);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('An error occurred while communicating with the server.');
+        });
+      }
+
+  }
+
+  function speakText(text) {
+      const speech = new SpeechSynthesisUtterance(text); // Create a speech object
+      speech.lang = 'en-US'; // Set language to English
+      speech.pitch = 1; // Set pitch (1 is default)
+      speech.rate = 1; // Set speed (1 is normal)
+      window.speechSynthesis.speak(speech); // Speak the text
+    }
+
+      // Event listener for 'Start Training' button
+      startTrainingButton.addEventListener('click', () => {
+        sendToServer("training");
+    });
+
+      // Event listener for 'Find Help' button
+      findHelpButton.addEventListener('click', () => {
+        sendToServer("emergency contact");
+      });
+    
+      findNearbyHospital.addEventListener('click',()=>{
+        sendToServer("locate");
+      });
+  </script>
+</body>
+</html>
+
