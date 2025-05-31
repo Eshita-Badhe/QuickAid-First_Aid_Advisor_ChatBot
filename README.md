@@ -1,5 +1,7 @@
 # QuickAid-First_Aid_Advisor_ChatBot
+
 First Aid Advisor Chatbot is a web-based chatbot that provides quick and easy first-aid guidance for various medical emergencies. It uses a user-friendly interface to offer step-by-step instructions, helping users handle injuries and health issues effectively.
+
 <br>
 ---
 <img src="https://github.com/Eshita-Badhe/QuickAid-First_Aid_Advisor_ChatBot/blob/main/images/intr.png" alt="Chatbot Interface" style="width:50%;height:auto;">
